@@ -61,14 +61,6 @@ if __name__ == "__main__":
         help="location where server listens",
         default=1025,
     )
-    parser.add_argument(
-        "-u",
-        "--username",
-        type=str,
-        help="name of the user",
-        default="Soupy",
-        required=False,
-    )
     args = parser.parse_args()
 
-    client = PlayerGameClient(args.address, args.1025, args.username).run()
+    client = PlayerGameClient(args.address, args.port, args.username).run()
