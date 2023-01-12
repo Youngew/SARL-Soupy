@@ -49,7 +49,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Game client.")
     parser.add_argument(
         "-a",
-        "--address",
+        "--adress",
         type=str,
         help="name of server on the network",
         default="localhost",
@@ -59,14 +59,14 @@ if __name__ == "__main__":
         "--port",
         type=int,
         help="location where server listens",
-        default=16210,
+        default=1025,
     )
     parser.add_argument(
         "-u",
-        "--Soupy",
+        "--username",
         type=str,
         help="name of the user",
-        default="unknown",
+        default="Soupy",
         required=True,
     )
     args = parser.parse_args()
