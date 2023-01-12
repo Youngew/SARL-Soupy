@@ -23,17 +23,17 @@ class PlayerGameClient(Client):
             print(my_farm)
 
             if game_data["day"] == 0:
-                self.add_command("0 EMPRUNTER 100000")
-                self.add_command("0 ACHETER_CHAMP")
-                self.add_command("0 ACHETER_CHAMP")
-                self.add_command("0 ACHETER_CHAMP")
-                self.add_command("0 ACHETER_TRACTEUR")
-                self.add_command("0 ACHETER_TRACTEUR")
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
-                self.add_command("1 SEMER COURGETTE 3")
+                self.add_command("0 EMPRUNTER 320000")
+                for _ in range(5):
+                    self.add_command(" 0 ACHETER_CHAMP")
+                for _ in range(10):
+                    self.add_command(" 0 ACHETER_TRACTEUR")
+                for _ in range(70):
+                    self.add_command("0 EMPLOYER")
+                for i range(1, 6):
+                    self.add_command(f"{i} SEMER PATATE 1")
                 
-             
+
             self.send_commands()
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
