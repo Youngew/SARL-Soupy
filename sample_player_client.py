@@ -30,10 +30,8 @@ class PlayerGameClient(Client):
                     self.add_command(" 0 ACHETER_TRACTEUR")
                 for _ in range(70):
                     self.add_command("0 EMPLOYER")
-                for i range(1, 6):
+                for i in range(1, 6):
                     self.add_command(f"{i} SEMER PATATE 1")
-                
-
             self.send_commands()
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
