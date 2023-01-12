@@ -6,9 +6,9 @@ from chronobio.network.client import Client
 
 class PlayerGameClient(Client):
     def __init__(
-        self: "PlayerGameClient", server_addr: str, port: int, username: str
+        self: "PlayerGameClient", server_addr: str, port: int
     ) -> None:
-        super().__init__(server_addr, port, username, spectator=False)
+        super().__init__(server_addr, port, "Soupy SARL", spectator=False)
         self._commands: list[str] = []
 
     def run(self: "PlayerGameClient") -> NoReturn:
