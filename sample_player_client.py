@@ -63,7 +63,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-u",
-        "--username",
+        "--Soupy",
         type=str,
         help="name of the user",
         default="unknown",
@@ -71,4 +71,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    client = PlayerGameClient(args.address, args.1025, args.soupy).run()
+    client = PlayerGameClient(args.address, args.1025, args.username).run()
