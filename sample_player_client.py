@@ -31,7 +31,7 @@ class PlayerGameClient(Client):
                 self.add_command("0 ACHETER_TRACTEUR")
                 self.add_command("0 EMPLOYER")
                 self.add_command("0 EMPLOYER")
-                self.add_command("1 SEMER PATATE 3")
+                self.add_command("1 SEMER COURGETTE 3")
 
             self.send_commands()
 
