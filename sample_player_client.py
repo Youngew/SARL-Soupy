@@ -3,6 +3,7 @@ from typing import NoReturn
 
 from chronobio.network.client import Client
 
+legumes = ["PATATE", "POIREAU", "TOMATE", "OIGNON", "COURGETTE"]
 
 class PlayerGameClient(Client):
     def __init__(
@@ -30,8 +31,19 @@ class PlayerGameClient(Client):
                     self.add_command(" 0 ACHETER_TRACTEUR")
                 for _ in range(70):
                     self.add_command("0 EMPLOYER")
-                for i in range(1, 6):
-                    self.add_command(f"{i} SEMER PATATE 1")
+                for champ in range(1, 6):
+                    if champ < 3:
+                        memoire_employe = 1
+                        for employe in range(memoire_employe, memoire_employe + 5):
+                            self.add_command(f"{employe} SEMER {legumes[champ]} {champ}")
+                            memoire_employe = employe
+                    else:
+                        for employe in range(memoire_employe, memoire_employe + 10):
+                            self.add_command(f"{employe} SEMER {legumes[champ]} {champ}")
+                            memoire_employe = employe
+                for employe in range(memoire_employe, memoire_employe + 20):
+                    self.add_command(f"{employe} CUISINER ")
+                    memoire_employe = employe
             self.send_commands()
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
