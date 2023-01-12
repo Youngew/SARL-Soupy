@@ -67,7 +67,7 @@ if __name__ == "__main__":
         type=str,
         help="name of the user",
         default="Soupy",
-        required=True,
+        required=False,
     )
     args = parser.parse_args()
 
