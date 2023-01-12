@@ -49,7 +49,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Game client.")
     parser.add_argument(
         "-a",
-        "--adress",
+        "--address",
         type=str,
         help="name of server on the network",
         default="localhost",
