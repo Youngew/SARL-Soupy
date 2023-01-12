@@ -1,38 +1,59 @@
 import argparse
-from socket import AF_INET, SOCK_STREAM, socket
+from typing import NoReturn
 
-from .data_handler import DataHandler
+from chronobio.network.client import Client
 
+legumes = ["PATATE", "POIREAU", "TOMATE", "OIGNON", "COURGETTE"]
 
-class Client:
+class PlayerGameClient(Client):
     def __init__(
-        self, server_addr: str, port: int, username: str = "", spectator: bool = True
+        self: "PlayerGameClient", server_addr: str, port: int
     ) -> None:
-        sock = socket(AF_INET, SOCK_STREAM)
-        sock.connect((server_addr, port))
-        self._data_handler = DataHandler(sock)
+        super().__init__(server_addr, port, "Soupy SARL", spectator=False)
+        self._commands: list[str] = []
 
-        self.username = username
-        if spectator:
-            self.username = "spectator"
+    def run(self: "PlayerGameClient") -> NoReturn:
+        while True:
+            game_data = self.read_json()
+            for farm in game_data["farms"]:
+                if farm["name"] == self.username:
+                    my_farm = farm
+                    break
+            else:
+                raise ValueError(f"My farm is not found ({self.username})")
+            print(my_farm)
 
-        self.send(f"{int(spectator)}\n")
-        self.send(f"{self.username}\n")
+            if game_data["day"] == 0:
+                self.add_command("0 EMPRUNTER 320000")
+                for _ in range(5):
+                    self.add_command(" 0 ACHETER_CHAMP")
+                for _ in range(10):
+                    self.add_command(" 0 ACHETER_TRACTEUR")
+                for _ in range(70):
+                    self.add_command("0 EMPLOYER")
+                for champ in range(1, 6):
+                    if champ < 3:
+                        memoire_employe = 1
+                        for employe in range(memoire_employe, memoire_employe + 5):
+                            self.add_command(f"{employe} SEMER {legumes[champ]} {champ}")
+                            memoire_employe = employe
+                    else:
+                        for employe in range(memoire_employe, memoire_employe + 10):
+                            self.add_command(f"{employe} SEMER {legumes[champ]} {champ}")
+                            memoire_employe = employe
+                for employe in range(memoire_employe, memoire_employe + 20):
+                    self.add_command(f"{employe} CUISINER ")
+                    memoire_employe = employe
+            self.send_commands()
 
-        line = self._data_handler.readline()
-        if line == "OK":
-            pass  # successful connection
-        else:
-            raise ConnectionRefusedError("Connection refused by server", line)
+    def add_command(self: "PlayerGameClient", command: str) -> None:
+        self._commands.append(command)
 
-    def send(self, message: str) -> None:
-        self._data_handler.write(message)
-
-    def send_json(self, data: object) -> None:
-        self._data_handler.write_json(data)
-
-    def read_json(self) -> object:
-        return self._data_handler.read_json()
+    def send_commands(self: "PlayerGameClient") -> None:
+        data = {"commands": self._commands}
+        print("sending", data)
+        self.send_json(data)
+        self._commands.clear()
 
 
 if __name__ == "__main__":
@@ -49,16 +70,8 @@ if __name__ == "__main__":
         "--port",
         type=int,
         help="location where server listens",
-        default=16210,
-    )
-    parser.add_argument(
-        "-u",
-        "--user",
-        type=str,
-        help="name of the user",
-        default="unknown",
-        required=True,
+        default=1025,
     )
     args = parser.parse_args()
 
-    client = Client(args.address, args.port, args.user, spectator=False)
+    client = PlayerGameClient(args.address, args.port).run()
