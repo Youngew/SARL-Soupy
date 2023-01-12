@@ -33,8 +33,7 @@ class PlayerGameClient(Client):
                 self.add_command("0 EMPLOYER")
                 self.add_command("1 SEMER COURGETTE 3")
                 
-                coucou luca
-
+             
             self.send_commands()
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
