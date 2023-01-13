@@ -46,11 +46,11 @@ class PlayerGameClient(Client):
 
                     if champ < 3:
                         
-                        self.add_command(f"{employe} SEMER {legumes[champ] - 1} {champ}")
+                        self.add_command(f"{employe} SEMER {legumes[champ - 1] } {champ}")
                         memoire_employe = memoire_employe + 1
 
                         for employe in range(memoire_employe, memoire_employe + 4):
-                            self.add_command(f"{employe} ARROSER {legumes[champ] - 1} {champ}")
+                            self.add_command(f"{employe} ARROSER {legumes[champ - 1] } {champ}")
                             memoire_employe = employe
                             
                     else:
@@ -59,7 +59,7 @@ class PlayerGameClient(Client):
                         memoire_employe = memoire_employe + 1
 
                         for employe in range(memoire_employe, memoire_employe + 9):
-                            self.add_command(f"{employe} ARROSER {legumes[champ] - 1} {champ}")
+                            self.add_command(f"{ employe} ARROSER {legumes[champ] - 1} {champ}")
                             memoire_employe = employe
 
                 for employe in range(memoire_employe, memoire_employe + 20):
