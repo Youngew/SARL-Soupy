@@ -6,6 +6,7 @@ from chronobio.network.client import Client
 legumes = ["PATATE", "POIREAU", "TOMATE", "OIGNON", "COURGETTE"]
 
 class PlayerGameClient(Client):
+
     def __init__(
         self: "PlayerGameClient", server_addr: str, port: int
     ) -> None:
@@ -14,8 +15,11 @@ class PlayerGameClient(Client):
 
     def run(self: "PlayerGameClient") -> NoReturn:
         while True:
+
             game_data = self.read_json()
+
             for farm in game_data["farms"]:
+
                 if farm["name"] == self.username:
                     my_farm = farm
                     break
@@ -24,32 +28,52 @@ class PlayerGameClient(Client):
             print(my_farm)
 
             if game_data["day"] == 0:
+
                 self.add_command("0 EMPRUNTER 320000")
+
                 for _ in range(5):
                     self.add_command(" 0 ACHETER_CHAMP")
+
                 for _ in range(10):
                     self.add_command(" 0 ACHETER_TRACTEUR")
+
                 for _ in range(70):
                     self.add_command("0 EMPLOYER")
+
+                memoire_employe = 1
+
                 for champ in range(1, 6):
+
                     if champ < 3:
-                        memoire_employe = 1
-                        for employe in range(memoire_employe, memoire_employe + 5):
-                            self.add_command(f"{employe} SEMER {legumes[champ]} {champ}")
+                        
+                        self.add_command(f"{employe} SEMER {legumes[champ] - 1} {champ}")
+                        memoire_employe = memoire_employe + 1
+
+                        for employe in range(memoire_employe, memoire_employe + 4):
+                            self.add_command(f"{employe} ARROSER {legumes[champ] - 1} {champ}")
                             memoire_employe = employe
+                            
                     else:
-                        for employe in range(memoire_employe, memoire_employe + 10):
-                            self.add_command(f"{employe} SEMER {legumes[champ]} {champ}")
+
+                        self.add_command(f"{employe} SEMER {legumes[champ] - 1} {champ}")
+                        memoire_employe = memoire_employe + 1
+
+                        for employe in range(memoire_employe, memoire_employe + 9):
+                            self.add_command(f"{employe} ARROSER {legumes[champ] - 1} {champ}")
                             memoire_employe = employe
+
                 for employe in range(memoire_employe, memoire_employe + 20):
                     self.add_command(f"{employe} CUISINER ")
                     memoire_employe = employe
+
             self.send_commands()
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
+
         self._commands.append(command)
 
     def send_commands(self: "PlayerGameClient") -> None:
+
         data = {"commands": self._commands}
         print("sending", data)
         self.send_json(data)
@@ -57,6 +81,7 @@ class PlayerGameClient(Client):
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description="Game client.")
     parser.add_argument(
         "-a",
