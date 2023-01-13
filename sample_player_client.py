@@ -3,6 +3,7 @@ from typing import NoReturn
 
 from chronobio.network.client import Client
 
+
 legumes = ["PATATE", "POIREAU", "TOMATE", "OIGNON", "COURGETTE"]
 
 class PlayerGameClient(Client):
@@ -41,12 +42,13 @@ class PlayerGameClient(Client):
                     self.add_command("0 EMPLOYER")
 
                 memoire_employe = 1
+                employe = memoire_employe
 
                 for champ in range(1, 6):
 
                     if champ < 3:
                         
-                        self.add_command(f"{employe} SEMER {legumes[champ - 1] } {champ}")
+                        self.add_command(f"{employe} SEMER {legumes[champ - 1]} {champ}")
                         memoire_employe = memoire_employe + 1
 
                         for employe in range(memoire_employe, memoire_employe + 4):
