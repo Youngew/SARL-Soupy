@@ -2,7 +2,6 @@ import argparse
 from typing import NoReturn
 from chronobio.network.client import Client
 
-
 class PlayerGameClient(Client):
 
     def __init__(
@@ -39,10 +38,9 @@ class PlayerGameClient(Client):
             
             if game_data["day"] == 0:
 
-                for _ in range(8):
+                for _ in range(7):
                     self.add_command("0 EMPLOYER")
 
-                self.add_command("0 ACHETER_TRACTEUR")
                 self.add_command("0 ACHETER_TRACTEUR")
 
                 self.add_command("0 EMPRUNTER 1000")
