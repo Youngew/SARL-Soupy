@@ -55,7 +55,7 @@ class PlayerGameClient(Client):
                     self.add_command("0 EMPLOYER")
 
 
-                self.add_command("0 EMPRUNTER 100000")
+                self.add_command("0 EMPRUNTER 200000")
 
                 for _ in range(5):
                     self.add_command("0 ACHETER_TRACTEUR")
