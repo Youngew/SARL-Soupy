@@ -2,6 +2,7 @@ import argparse
 from typing import NoReturn
 from chronobio.network.client import Client
 
+
 class PlayerGameClient(Client):
 
     def __init__(
@@ -17,7 +18,6 @@ class PlayerGameClient(Client):
         legumes = ["PATATE", "POIREAU", "TOMATE", "OIGNON", "COURGETTE"]
         tempo = [0, 0, 0, 0, 0]
         stockage = [0, 0, 0, 0, 0]
-        licencier = 0
         N_champ = 0
         tempo_trac = 0
         marche_soupe = 0
@@ -35,37 +35,90 @@ class PlayerGameClient(Client):
             else:
                 raise ValueError(f"My farm is not found ({self.username})")
             print(my_farm)
+
+            
             
             if game_data["day"] == 0:
 
-                for _ in range(7):
-                    self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
+                self.add_command("0 EMPLOYER")
 
                 self.add_command("0 ACHETER_TRACTEUR")
 
-                self.add_command("0 EMPRUNTER 1000")
+                self.add_command("0 ACHETER_CHAMP")
+                self.add_command("0 ACHETER_CHAMP")
+                self.add_command("0 ACHETER_CHAMP")
+                self.add_command("0 ACHETER_CHAMP")
+                self.add_command("0 ACHETER_CHAMP")
+        
+                self.add_command("1 SEMER PATATE 1")
+                self.add_command("2 SEMER POIREAU 2")
+                self.add_command("3 SEMER TOMATE 3")
+                self.add_command("4 SEMER OIGNON 4")
+                self.add_command("5 SEMER COURGETTE 5")
 
-                for _ in range(5):
-                    self.add_command("0 ACHETER_CHAMP")
-                
-                for i in range(5):
-                    self.add_command(f"{i+1} SEMER {legumes[i]} {i+1}")
-               
                 self.send_commands()
 
-            for day in range(5):
+            elif game_data["day"] == 1:
 
-                if game_data["day"] == day:
- 
-                    for i in range(day):
-                        self.add_command(f"{licencier + i+1} ARROSER {i +1}")
-                        champ_cpt[i] = champ_cpt[i] + 1
+                self.add_command("1 ARROSER 1")
+    
+                self.send_commands()
 
-            if game_data["day"] > 4 : 
+            elif game_data["day"] == 2:
+
+                self.add_command("1 ARROSER 1")
+                self.add_command("2 ARROSER 2")
+
+                self.send_commands()
+
+            elif game_data["day"] == 3:
+
+                self.add_command("1 ARROSER 1")
+                self.add_command("2 ARROSER 2")
+                self.add_command("3 ARROSER 3")
+
+                self.send_commands()
+
+            elif game_data["day"] == 4:
+
+                self.add_command("1 ARROSER 1")
+                self.add_command("2 ARROSER 2")
+                self.add_command("3 ARROSER 3")
+                self.add_command("4 ARROSER 4")
+
+                self.send_commands()
+
+            elif game_data["day"] == 5:
+
+                self.add_command("1 ARROSER 1")
+                self.add_command("2 ARROSER 2")
+                self.add_command("3 ARROSER 3")
+                self.add_command("4 ARROSER 4")
+                self.add_command("5 ARROSER 5")
+
+                champ_cpt[0] = 5
+                champ_cpt[1] = 4
+                champ_cpt[2] = 3
+                champ_cpt[3] = 2
+                champ_cpt[4] = 1
+            
+               
+
+            else:
+                
+                if len(game_data["events"]) != 0 :
+                    champ_cpt = [0, 0, 0, 0, 0]
+                    champ_seme = [1, 1, 1, 1, 1] 
 
                 if champ_cpt[N_champ] == 10 and tempo_trac < 0:
 
-                    self.add_command(f"{6} STOCKER {N_champ + 1} 1")
+                    self.add_command(f"6 STOCKER {N_champ + 1} 1")
                     stockage[N_champ] = stockage[N_champ] + 1000
                     champ_cpt[N_champ] = 0
                     champ_seme[N_champ] = 0
@@ -89,12 +142,12 @@ class PlayerGameClient(Client):
 
                     elif champ_seme[i] == 0:
 
-                        self.add_command(f"{licencier + i + 1} SEMER {legumes[i]} {i + 1}")
+                        self.add_command(f"{i + 1} SEMER {legumes[i]} {i + 1}")
                         champ_seme[i] = 1
 
                     elif champ_cpt[i] < 10 :
 
-                        self.add_command(f"{licencier + i + 1} ARROSER {i + 1}")
+                        self.add_command(f"{i + 1} ARROSER {i + 1}")
                         champ_cpt[i] = champ_cpt[i] + 1 
 
                 tempo_trac = tempo_trac - 1
@@ -106,13 +159,13 @@ class PlayerGameClient(Client):
                     if contenant != 0:
                         cpt_5_legume = cpt_5_legume + 1
 
-                if cpt_5_legume == 5 :
+                if cpt_5_legume == 5  :
 
                     if marche_soupe == 0 :
 
                         if premiere_soupe == 0 :
 
-                            self.add_command(f"{ 7} CUISINER")
+                            self.add_command("7 CUISINER")
                             for i in range(5):
                                 stockage[i] = stockage[i] - 100
                             premiere_soupe = 1
@@ -120,7 +173,7 @@ class PlayerGameClient(Client):
 
                         else :
 
-                            self.add_command(f"{ 7} CUISINER")
+                            self.add_command("7 CUISINER")
                             cpt_5_legume = 0
                             for i in range(5):
                                 stockage[i] = stockage[i] - 100
@@ -130,6 +183,7 @@ class PlayerGameClient(Client):
                         marche_soupe = marche_soupe - 1
 
             self.send_commands() 
+
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
 
