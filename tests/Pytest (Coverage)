@@ -1,0 +1,19 @@
+#Range, Act, assert
+
+# pytest ou py.test
+
+# pytest -rA : Avoir détails sur tests
+
+# pytest test_1.py -rA : n'execute que le fichier test_1
+
+# pytest -rA -k "test_3" : Analyse tout et execute toutes les fonctions "test_3".
+
+# pytest test_1.py -rA -k "test_3" : n'execute que la fonction "test_3" du fichier test_1.
+
+# pytest -rA -k "test_3" -v : Analyse tout t execute toutes les fonctions "test_3" avec plus d'infos.
+
+# pytest -s : Affiche prints pour debbug.
+
+# pytest -s -v : Execute avec détails et écrit les prints pour debbug.
+
+# pytest -vv --cov=. Semer.py : Coverage
