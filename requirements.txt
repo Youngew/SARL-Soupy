@@ -1,1 +1,22 @@
 arcade==2.6.16
+
+DOCUMENTATION D'INSTALLATION DU SERVEUR ET DU CLIENT
+
+Installer un logiciel pour coder. Microsoft VSCode par exemple. 
+
+Dans un premier temps, télécharger tout le dépot à un emplacement où il ne sera pas déplacé par la suite.
+
+Ouvrir une console powershell et installer python3. "python -m pip install"
+
+Dans la console toujours installer un environnement virtuel : "python3 -m venv venv-env". Cela crée le dossier tutorial-env (s'il n'existe pas) et des sous-dossiers contenant une copie de l'interpréteur Python et d'autres fichiers utiles.
+Ensuite, il faut l'activer : "venv-env\Scripts\activate.ps1"
+
+Une fois l'environnement virtuel crée, Installer la dépendance pytest avec la commande : "pip install -U pytest"
+
+Installer la dépendance pour les tests : "pip install coverage"  et "pip install pytest-cov" .
+
+Ouvrir une console powershell et accéder au dossier principal du dépôt. entrer la commande suivante pour lancer le serveur.  "python -m chronobio.game.server -p 2000"
+
+Dans une deuxième console, accéder aussi au dossier principal et entrer la commande suivante pour intégrer l'équipe au serveur : "python -m sample_player_clientV3 -p 2000"
+
+Dans le fichier sample player client
