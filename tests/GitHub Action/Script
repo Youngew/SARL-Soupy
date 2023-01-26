@@ -1,0 +1,41 @@
+#name: Python Package using Conda
+
+# Git init : initialiser Git dans un dossier et donc pouvoir utiliser le versionning dans le dossier.
+
+# Git status : avoir le statut du dossier
+
+# Git add : Enregistrer avec git (mettre un fichier dans la zone de transit)
+
+# Git commit -m "..." : Ajouter avec message dans l'enveloppe
+
+# Git log : Voir l'historique de commit
+
+# Git checkout "adresse_commit" : revenir à un commit
+
+# Git push : Ajouter a GitHub
+
+# Git config --list : Voir configuration git sur l'ordiateur
+
+on: [push]
+
+jobs:
+  Run_test:
+    runs-on: Soupy
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+
+        echo $CONDA/bin >> $GITHUB_PATH
+    - name: run test Semer
+      run: |
+        pytest -vv --cov=. Semer.py
+    - name: run test Semer
+      run: |
+        pytest -vv --cov=. Semer.py
+    - name: run all tests
+      run: |
+        pytest -vv --cov=. test.py
