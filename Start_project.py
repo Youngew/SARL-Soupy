@@ -17,8 +17,8 @@ def main(f) -> int:
     os.system(
         "cls && echo LANCEMENT DES TESTS && pytest --cov= test.py"
         "&& echo LANCEMENT DE MYPY && mypy farm.py "
-        f"&& echo LANCEMENT DE LA FERME && start /B pythonw3 -m chronobio.game.server {f} -p {port} "
-        f"&& python3 sample_player_client.py -p {port}"
+        f"&& echo LANCEMENT DE LA FERME && start /B pythonw3 -m chronobio.game.server {f} -p {2000} "
+        f"&& python3 sample_player_client.py -p {2000}"
     )
     return 0
 
