@@ -29,9 +29,9 @@ jobs:
         python-version: '3.10'
 
         echo $CONDA/bin >> $GITHUB_PATH
-    - name: run test Semer
+    - name: run test Tracteur
       run: |
-        pytest -vv --cov=. Semer.py
+        pytest -vv --cov=. Tracteur.py
     - name: run test Semer
       run: |
         pytest -vv --cov=. Semer.py
