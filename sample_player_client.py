@@ -40,13 +40,8 @@ class PlayerGameClient(Client):
             
             if game_data["day"] == 0:
 
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
-                self.add_command("0 EMPLOYER")
+                for _ in range(12):
+                    self.add_command("0 EMPLOYER")
 
                 self.add_command("0 ACHETER_TRACTEUR")
 
@@ -61,6 +56,11 @@ class PlayerGameClient(Client):
                 self.add_command("3 SEMER TOMATE 3")
                 self.add_command("4 SEMER OIGNON 4")
                 self.add_command("5 SEMER COURGETTE 5")
+                self.add_command("6 SEMER PATATE 1")
+                self.add_command("7 SEMER POIREAU 2")
+                self.add_command("8 SEMER TOMATE 3")
+                self.add_command("9 SEMER OIGNON 4")
+                self.add_command("10 SEMER COURGETTE 5")
 
                 self.send_commands()
 
@@ -118,7 +118,7 @@ class PlayerGameClient(Client):
 
                 if champ_cpt[N_champ] == 10 and tempo_trac < 0:
 
-                    self.add_command(f"6 STOCKER {N_champ + 1} 1")
+                    self.add_command(f"11 STOCKER {N_champ + 1} 1")
                     stockage[N_champ] = stockage[N_champ] + 1000
                     champ_cpt[N_champ] = 0
                     champ_seme[N_champ] = 0
@@ -143,11 +143,13 @@ class PlayerGameClient(Client):
                     elif champ_seme[i] == 0:
 
                         self.add_command(f"{i + 1} SEMER {legumes[i]} {i + 1}")
+                        self.add_command(f"{i + 6} SEMER {legumes[i]} {i + 1}")
                         champ_seme[i] = 1
 
                     elif champ_cpt[i] < 10 :
 
                         self.add_command(f"{i + 1} ARROSER {i + 1}")
+                        self.add_command(f"{i + 6} ARROSER {i + 1}")
                         champ_cpt[i] = champ_cpt[i] + 1 
 
                 tempo_trac = tempo_trac - 1
@@ -165,7 +167,7 @@ class PlayerGameClient(Client):
 
                         if premiere_soupe == 0 :
 
-                            self.add_command("7 CUISINER")
+                            self.add_command("12 CUISINER")
                             for i in range(5):
                                 stockage[i] = stockage[i] - 100
                             premiere_soupe = 1
@@ -173,7 +175,7 @@ class PlayerGameClient(Client):
 
                         else :
 
-                            self.add_command("7 CUISINER")
+                            self.add_command("12 CUISINER")
                             cpt_5_legume = 0
                             for i in range(5):
                                 stockage[i] = stockage[i] - 100
