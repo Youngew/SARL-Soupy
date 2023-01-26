@@ -1,0 +1,5 @@
+Ouvrir serveur 
+PS D:\python\Soupy Test\SARL-Soupy> python -m chronobio.game.server -p 2000
+
+Code
+PS D:\python\Soupy Test\SARL-Soupy> python -m sample_player_client -p 2000
