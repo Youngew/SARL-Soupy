@@ -15,7 +15,7 @@ def handle_sigint(signum, frame):
 def main(f) -> int:
 
     os.system(
-        "cls && echo LANCEMENT DES TESTS && pytest --cov= "
+        "cls && echo LANCEMENT DES TESTS && pytest --cov=test"
         "&& echo LANCEMENT DE MYPY && mypy farm.py "
         f"&& echo LANCEMENT DE LA FERME && start /B pythonw3 -m chronobio.game.server {f} -p {port} "
         f"&& python3 sample_player_client.py -p {port}"
