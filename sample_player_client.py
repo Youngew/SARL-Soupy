@@ -51,11 +51,11 @@ class PlayerGameClient(Client):
                         
             if game_data["day"] == 0:
 
-                for _ in range(17):
+                for _ in range(25):
                     self.add_command("0 EMPLOYER")
 
 
-                self.add_command("0 EMPRUNTER 300000")
+                self.add_command("0 EMPRUNTER 100000")
 
                 for _ in range(5):
                     self.add_command("0 ACHETER_TRACTEUR")
@@ -76,6 +76,11 @@ class PlayerGameClient(Client):
                 self.add_command("8 ARROSER 3")
                 self.add_command("9 ARROSER 4")
                 self.add_command("10 ARROSER 5")
+                self.add_command("11 ARROSER 1")
+                self.add_command("12 ARROSER 2")
+                self.add_command("13 ARROSER 3")
+                self.add_command("14 ARROSER 4")
+                self.add_command("15 ARROSER 5")
 
                 self.send_commands()
 
@@ -137,13 +142,13 @@ class PlayerGameClient(Client):
 
                 champ_seme = recup_info_plantation_champ()
 
-                if champ_cpt[N_champ] == 0 and tempo_trac < 0:
+                if champ_cpt[N_champ] == 0 and tempo_trac < 0 and champ_seme[N_champ] != "NONE":
 
-                    self.add_command(f"{11 + switch} STOCKER {N_champ + 1} {1 + switch}")
+                    self.add_command(f"{16 + switch} STOCKER {N_champ + 1} {1 + switch}")
                     stockage[N_champ] = stockage[N_champ] + 2000
                     champ_cpt[N_champ] = 0
                     champ_seme[N_champ] = 0
-                    tempo_trac = 2
+                    tempo_trac = 1
 
                     if N_champ < 2 :
                         tempo[N_champ] = 6
@@ -169,13 +174,15 @@ class PlayerGameClient(Client):
                     elif champ_seme[i] == "NONE":
 
                         self.add_command(f"{i + 1} SEMER {legumes[i]} {i + 1}")
-                        self.add_command(f"{i + 6} SEMER {legumes[i]} {i + 1}")
+                        self.add_command(f"{i + 6} ARROSER {i + 1}")
+                        self.add_command(f"{i + 11} ARROSER {i + 1}")
                         champ_seme[i] = 1
 
                     elif champ_cpt[i] > 0 :
 
                         self.add_command(f"{i + 1} ARROSER {i + 1}")
                         self.add_command(f"{i + 6} ARROSER {i + 1}")
+                        self.add_command(f"{i + 11} ARROSER {i + 1}")
                         champ_cpt[i] = champ_cpt[i] - 1 
 
                 tempo_trac = tempo_trac - 1
@@ -188,25 +195,23 @@ class PlayerGameClient(Client):
                         cpt_5_legume = cpt_5_legume + 1
 
                 
-                if cpt_5_legume == 5 and my_farm['events'] == [] :
+                if cpt_5_legume == 5 and ( my_farm['events'] == "flood" or my_farm['events'] == "fire")  :
 
                     if marche_soupe == 0 :
 
                         if premiere_soupe == 0 :
 
-                            self.add_command("16 CUISINER")
-                            self.add_command("17 CUISINER")
                             for i in range(5):
+                                self.add_command(f"{21 + i} CUISINER")
                                 stockage[i] = stockage[i] - 100
                             premiere_soupe = 1
                             marche_soupe = 6
 
                         else :
 
-                            self.add_command("16 CUISINER")
-                            self.add_command("17 CUISINER")
                             cpt_5_legume = 0
                             for i in range(5):
+                                self.add_command(f"{21 + i} CUISINER")
                                 stockage[i] = stockage[i] - 100
                         
                     else :
@@ -214,9 +219,6 @@ class PlayerGameClient(Client):
                         marche_soupe = marche_soupe - 1
 
                 self.send_commands() 
-
-            
-
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
 
