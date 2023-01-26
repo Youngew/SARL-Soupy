@@ -131,7 +131,7 @@ class PlayerGameClient(Client):
 
                 self.send_commands()
 
-            else:
+            else :
                 
                 champ_cpt = recup_info_arrosage_champ() 
 
@@ -140,7 +140,7 @@ class PlayerGameClient(Client):
                 if champ_cpt[N_champ] == 0 and tempo_trac < 0:
 
                     self.add_command(f"{11 + switch} STOCKER {N_champ + 1} {1 + switch}")
-                    stockage[N_champ] = stockage[N_champ] + 1000
+                    stockage[N_champ] = stockage[N_champ] + 2000
                     champ_cpt[N_champ] = 0
                     champ_seme[N_champ] = 0
                     tempo_trac = 2
@@ -187,7 +187,8 @@ class PlayerGameClient(Client):
                     if contenant != 0:
                         cpt_5_legume = cpt_5_legume + 1
 
-                if cpt_5_legume == 5  :
+                
+                if cpt_5_legume == 5 and my_farm['events'] == [] :
 
                     if marche_soupe == 0 :
 
@@ -213,6 +214,8 @@ class PlayerGameClient(Client):
                         marche_soupe = marche_soupe - 1
 
                 self.send_commands() 
+
+            
 
 
     def add_command(self: "PlayerGameClient", command: str) -> None:
